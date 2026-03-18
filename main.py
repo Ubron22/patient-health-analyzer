@@ -21,21 +21,33 @@ def classify_blood_pressure(systolic, diastolic):
         return "High Stage 1"
     else:
         return "High Stage 2"
+
+def classify_heart_rate(heart_rate):
+    if heart_rate < 60:
+        return "Low"
+    elif heart_rate < 100:
+        return "Normal"
+    else:
+        return "High"
    
+
 def analyze_patient(patient):
     BMI =  calculate_bmi(patient["weight"], patient["height"])
     classification = classify_bmi(calculate_bmi(patient["weight"], patient["height"]))
     print(f"Patient: {patient["name"]} | Age: {patient["age"]}")
     print(f"BMI: {BMI} - {classification} ")
     print(f"Blood Pressure: {classify_blood_pressure(patient["systolic_bp"],patient["diastolic_bp"])}")
+    print(f"Heart rate: {classify_heart_rate(patient["heart_rate"])}")
     
 
 def flag_at_risk(patient):
     abnormal_count = 0
     if classify_bmi(calculate_bmi(patient["weight"], patient["height"])) != "Normal":
-       abnormal_count +=1
+        abnormal_count +=1
     if classify_blood_pressure(patient["systolic_bp"],patient["diastolic_bp"]) != "Normal":
-       abnormal_count +=1
+        abnormal_count +=1
+    if classify_heart_rate(patient["heart_rate"]) != "Normal":
+        abnormal_count +=1
     if abnormal_count >= 2:
        return "STATUS: AT RISK"
     else:
@@ -50,7 +62,8 @@ if __name__ == "__main__":
         "weight": 78,
         "height": 1.65,
         "systolic_bp": 145,
-        "diastolic_bp": 95
+        "diastolic_bp": 95,
+        "heart_rate": 95
     },
     {
         "name": "Bob",
@@ -58,7 +71,8 @@ if __name__ == "__main__":
         "weight": 72,
         "height": 1.80,
         "systolic_bp": 118,
-        "diastolic_bp": 76
+        "diastolic_bp": 76,
+        "heart_rate": 95
     },
     {
         "name": "Claire",
@@ -66,7 +80,8 @@ if __name__ == "__main__":
         "weight": 95,
         "height": 1.70,
         "systolic_bp": 155,
-        "diastolic_bp": 100
+        "diastolic_bp": 100,
+        "heart_rate": 110
     }]
     for patient in patients:
         analyze_patient(patient)
