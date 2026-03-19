@@ -87,3 +87,23 @@ if __name__ == "__main__":
         analyze_patient(patient)
         print(flag_at_risk(patient))
         print("-" * 40)
+    print("\n--- ADD A NEW PATIENT ---")
+    name = input("Patient name: ")
+    age = int(input("Age: "))
+    weight = float(input("Weight (kg): "))
+    height = float(input("Height (m): "))
+    heart_rate = int(input("Heart rate (bpm): "))
+    systolic_bp = int(input("Systolic blood pressure: "))
+    diastolic_bp = int(input("Diastolic blood pressure: "))
+    input_patient = {}
+    input_patient["name"] = name
+    input_patient["age"] = age
+    input_patient["weight"] = weight
+    input_patient["height"] = height
+    input_patient["heart_rate"] = heart_rate
+    input_patient["systolic_bp"] = systolic_bp
+    input_patient["diastolic_bp"] = diastolic_bp
+
+    analyze_patient(input_patient)
+    print(flag_at_risk(input_patient))
+    print("-" * 40)
