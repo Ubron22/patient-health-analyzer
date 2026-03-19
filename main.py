@@ -1,17 +1,26 @@
 def calculate_bmi(weight, height):
-  bmi = weight / (height ** 2)
-  return round(bmi,1)
+    bmi = weight / (height ** 2)
+    return round(bmi,1)
+
+def calculate_group_averages(patients):
+    total = 0
+    count = 0
+    for patient in patients:
+        total += calculate_bmi(patient["weight"], patient["height"])
+        count +=1
+    return round((total/count),1)
+
 
 def classify_bmi(bmi):
     if bmi < 18.5:
-      return "Underweight"
+        return "Underweight"
     elif bmi <= 25:
-      return "Normal"
+        return "Normal"
     elif bmi <= 30:
-      return "Overweight"
+        return "Overweight"
     else:
-      return "Obese"
-    
+        return "Obese"
+
 def classify_blood_pressure(systolic, diastolic):
     if systolic < 120 and diastolic < 80:
         return "Normal"
@@ -45,15 +54,22 @@ def flag_at_risk(patient):
     if classify_bmi(calculate_bmi(patient["weight"], patient["height"])) != "Normal":
         abnormal_count +=1
     if classify_blood_pressure(patient["systolic_bp"],patient["diastolic_bp"]) != "Normal":
-        abnormal_count +=1
+        abnormal_count += 1
     if classify_heart_rate(patient["heart_rate"]) != "Normal":
         abnormal_count +=1
     if abnormal_count >= 2:
-       return "STATUS: AT RISK"
+        return "STATUS: AT RISK"
     else:
-       return "STATUS: LOW RISK"
-
-
+        return "STATUS: LOW RISK"
+    
+def group_summary(patients):
+    count = 0
+    print(f"Average BMI across all patients: {calculate_group_averages(patients)}")
+    for patient in patients:
+        if flag_at_risk(patient) == "STATUS: AT RISK":
+            count +=1
+    print(f"Total number of at-risk patients: {count}")
+          
 if __name__ == "__main__":
     patients = [
     {
@@ -103,7 +119,9 @@ if __name__ == "__main__":
     input_patient["heart_rate"] = heart_rate
     input_patient["systolic_bp"] = systolic_bp
     input_patient["diastolic_bp"] = diastolic_bp
+    patients.append(input_patient)
 
     analyze_patient(input_patient)
     print(flag_at_risk(input_patient))
     print("-" * 40)
+    group_summary(patients)
